@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+  namespace: multi-k8s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: web
+  template:
+    metadata:
+      labels:
+        component: web
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+        - name: client
+          image: 192.168.0.106:32002/multi-k8s/client:0.1
+          ports:
+            - containerPort: 3000
